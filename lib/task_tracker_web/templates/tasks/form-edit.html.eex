@@ -1,0 +1,24 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+
+  <b><%= "Assign ID number" %></b>
+  <%= number_input f, :user , class: "form-control" %>
+  <%= error_tag f, :user %>
+  <br>
+  <b><%= "Time Taken (in increments of 15)"  %></b>
+  <%= number_input f, :time, class: "form-control" %>
+  <%= error_tag f, :time %>
+  <br>
+  <b><%= "Done?" %></b>
+  <%= checkbox f, :completion %>
+  <%= error_tag f, :completion %>
+  <br>
+  <div>
+    <%= submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>
