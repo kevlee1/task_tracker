@@ -1,3 +1,6 @@
+# Design Choices:
+I decided that a user should have both a name and an email. They use their email to sign up, and log in. You can create tasks by inputting a title for them and a description for the task. After the task has been created, you can edit the task by clicking the button next to it, and then you will be able to check it off (it's completed) and say how long it took to complete in 15 minute internvals.
+
 # TaskTracker
 
 To start your Phoenix server:
