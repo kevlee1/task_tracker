@@ -45,7 +45,7 @@ defmodule TaskTrackerWeb.TasksController do
 
   def update(conn, %{"id" => id, "tasks" => tasks_params}) do
     tasks = Task.get_tasks!(id)
-    if(rem(elem(Integer.parse(task_params["time"]), 0), 15) != 0) do
+    if(rem(elem(Integer.parse(tasks_params["time"]), 0), 15) != 0) do
       put_flash(conn, :error, "Must increment by 15 minutes")
       |> redirect(to: Routes.tasks_path(conn, :index))
     else

@@ -25,8 +25,8 @@
         <td> <%= user_name.name %></td>
       <% end %>
 
-      <td><%= task.time %></td>
-      <%= if task.completion do %>
+      <td><%= tasks.time %></td>
+      <%= if tasks.completion do %>
         <td>&#10004;</td>
       <% else %>
         <td>&#10006;</td>
