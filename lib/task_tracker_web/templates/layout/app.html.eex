@@ -8,43 +8,53 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav class="navbar navbar-extend-sm">
-        <div class="col-16">
-        <h1 class="navbar-brand">Task Tracker</h1><br>
-        <p class="navbar-text">CS4550: Task-Tracker 1</p>
-        </div>
-        <div class="col-4">
+    <div class="container">
+      <nav class="navbar navbar-extend-sm">
+        <ul class="navbar-nav mr-auto">
+          <%= link "TaskTracker", to: Routes.page_path(@conn, :index), class: "navbar-brand" %>
+          <li class="nav-item">
+            <%= link "New Task", to: Routes.tasks_path(@conn, :index), class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link "Register New User", to: Routes.user_path(@conn, :new), class: "nav-link" %>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
           <%= if @current_user do %>
             <div class="text-right">
               User: <%= @current_user.name %><br>
-              <%= link("Logout", to: Routes.session_path(@conn, :delete),
-                method: :delete) %><br>
+              <%= link("Logout", to: Routes.session_path(@conn, :delete), method: :delete) %><br>
               <%= link("Profile", to: Routes.user_path(@conn, :show, @current_user)) %></div>
           <% else %>
-            <%= form_for @conn, Routes.session_path(@conn, :create),
-                [class: "form-inline"], fn f -> %>
-                <p>Login with email</p>
-                <%= text_input f, :email, class: "form-control" %>
-                <%= submit "login", class: "btn btn-secondary" %> 
-                <p>Not a user? <%= link "Sign up!", to: Routes.user_path(@conn, :new) %></p>
+            <%= form_for @conn, Routes.session_path(@conn, :create), [class: "form-inline"], fn f -> %>
+              <p>Login with email</p>
+              <%= text_input f, :email, class: "form-control" %>
+              <%= submit "login", class: "btn btn-secondary" %> 
+              <p>Not a user? <%= link "Sign up!", to: Routes.user_path(@conn, :new) %></p>
             <% end %>
           <% end %>
+    </div>
+      </nav>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <%= if get_flash(@conn, :info) do %>
+            <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+          <% end %>
+          <%= if get_flash(@conn, :error) do %>
+            <p class="alert alert-danger" role="alert">
+            <%= get_flash(@conn, :error) %>
+            </p>
+          <% end %>
         </div>
-        </nav>
-        <h1>  </h1>
-      </section>
-    </header>
-    <main role="main" class="container">
-      <%= if get_flash(@conn, :info) do %>
-        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <% end %>
-      <%= if get_flash(@conn, :error) do %>
-        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <% end %>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
-    </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+      </div>
+
+      <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 <h1>Tasks List</h1>
-<span><%= link "New Task", to: Routes.task_path(@conn, :new), class: "btn btn-primary"%></span>
+<span><%= link "New Task", to: Routes.tasks_path(@conn, :new), class: "btn btn-primary"%></span>
 
 <table>
   <thead>
@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= for tasks <- @tasks do %>
+    <%= for tasks <- @task do %>
       <% user_name = TaskTracker.Users.get_user(tasks.user) %>
     <tr>
       <td><%= tasks.title %></td>

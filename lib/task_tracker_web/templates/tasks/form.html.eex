@@ -4,15 +4,14 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
   <%= label f, :title %>
   <%= text_input f, :title, class: "form-control" %>
   <%= error_tag f, :title %>
-
+  <br>
   <%= label f, :description %>
   <%= textarea f, :description, class: "form-control" %>
   <%= error_tag f, :description %>
-
+  <br>
   <div>
     <%= submit "Save", class: "btn btn-primary" %>
   </div>

@@ -7,7 +7,7 @@ defmodule TaskTrackerWeb.SessionController do
       conn
       |> put_session(:user_id, user.id)
       |> put_flash(:info, "Welcome back, #{user.name}")
-      |> redirect(to: Routes.task_path(conn, :index))
+      |> redirect(to: Routes.tasks_path(conn, :index))
     else
       conn
       |> put_flash(:error, "Login failed")
