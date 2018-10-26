@@ -9,7 +9,7 @@
 
 use Mix.Releases.Config,
     # This sets the default release built by `mix release`
-    default_release: :default
+    default_release: :default,
     # This sets the default environment used by `mix release`
     default_environment: Mix.env()
 
@@ -21,6 +21,16 @@ use Mix.Releases.Config,
 # an environment's settings will override those of a release
 # when building in that environment, this combination of release
 # and environment configuration is called a profile
+get_secret = fn name ->
+  base = Path.expand("~/.config/taskmaster")
+  File.mkdir_p!(base)
+  path = Path.join(base, name)
+  unless File.exists?(path) do
+    secret = Base.encode16(:crypto.strong_rand_bytes(32))
+    File.write!(path, secret)
+  end
+  String.trim(File.read!(path))
+end
 
 environment :dev do
   # If you are running Phoenix, you should make sure that
@@ -31,13 +41,13 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :"kZX.2YJs/*uRzKz!auPo!_,n~23C4.r@PRFA=XSE$V/y6&?tO>X.oiOAHA1s3`*0"
+  set cookie: :"gOGW*x)p,YwH/NIiqCU*GI|4s5hh?yjNLgh@{EW4FlrZO3!sj[k_}SEbxcsG80=d"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"d1b4`/KWJz&>mhLR*vHR3ixOq7!u?`fjN@MP%JG]HWpTP7}M:{*R}`/zE/p=wOvm"
+  set cookie: String.to_atom(get_secret.("prod_cookie"))
 end
 
 # You may define one or more releases in this file.
