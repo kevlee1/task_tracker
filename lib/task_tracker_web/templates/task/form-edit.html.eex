@@ -5,18 +5,15 @@
     </div>
   <% end %>
 
-
-  <b><%= "Assign ID number" %></b>
-  <%= number_input f, :userID , class: "form-control" %>
-  <%= error_tag f, :userID %>
+  <b><%= "Assignee ID number (leave blank to unassign)" %></b>
+  <%= number_input f, :user_id , class: "form-control" %>
+  <%= error_tag f, :user %>
   <br>
-  <b><%= "Time Taken (in increments of 15)"  %></b>
-  <%= number_input f, :time, class: "form-control" %>
-  <%= error_tag f, :time %>
   <br>
   <b><%= "Done?" %></b>
   <%= checkbox f, :completion %>
   <%= error_tag f, :completion %>
+  <br>
   <br>
   <div>
     <%= submit "Save", class: "btn btn-primary" %>

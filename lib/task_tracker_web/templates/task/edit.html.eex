@@ -1,0 +1,7 @@
+<h1>Edit Task</h1>
+  <script>
+    window.time_block_path="<%= Routes.time_block_path(@conn, :create) %>";
+  </script>
+<%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :update, @task)) %>
+
+<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>

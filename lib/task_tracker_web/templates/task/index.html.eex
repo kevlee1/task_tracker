@@ -1,0 +1,48 @@
+<h1>Tasks List</h1>
+<%= if @current_user != nil do %>
+  <span><%= link "New Task", to: Routes.task_path(@conn, :new), class: "btn btn-primary"%></span>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Task Title</th>
+      <th>Description</th>
+      <th>User Id</th>
+      <th>Time Block/th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for task <- @task do %>
+      <% userID = if task.user_id == nil, do: 0, else: task.user_id %>
+      <% user_name = TaskTracker.Users.get_user(userID) %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <%= if (user_name == nil) do %>
+        <% user_name = %{name: "Not assigned"} %>
+        <td><%= user_name.name %></td>
+      <% else %>
+        <td> <%= user_name.name %></td>
+      <% end %>
+
+      <td><%= TaskTracker.TimeBlocks.sum_times(task.id) %></td>
+      <%= if task.completion do %>
+        <td>&#10004;</td>
+      <% else %>
+        <td>&#10006;</td>
+      <% end %>
+      
+
+      <td>
+        <%= link "Edit", to: Routes.task_path(@conn, :edit, task) %>
+        <%= link "Time", to: Routes.task_path(@conn, :show, task) %>
+        <%= link "Delete", to: Routes.task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Tasks", to: Routes.task_path(@conn, :new) %></span>

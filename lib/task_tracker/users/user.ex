@@ -3,9 +3,12 @@ defmodule TaskTracker.Users.User do
   import Ecto.Changeset
 
 
-  schema "users" do
+  schema "user" do
     field :email, :string
+    field :is_manager, :boolean, default: false
     field :name, :string
+    belongs_to :manager, TaskTracker.Users.User
+    has_many :task, TaskTracker.Tasks.Task
 
     timestamps()
   end
@@ -13,7 +16,7 @@ defmodule TaskTracker.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
-    |> validate_required([:name, :email])
+    |> cast(attrs, [:email, :name, :manager_id])
+    |> validate_required([:email, :name])
   end
 end

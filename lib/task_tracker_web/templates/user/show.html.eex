@@ -1,9 +1,8 @@
-<h1>Show User</h1>
+<h1>Profile for: <%= List.first(String.split(@user.name, " ")) %> </h1>
 
 <ul>
-
   <li>
-    <strong>Name:</strong>
+    <strong>Full Name:</strong>
     <%= @user.name %>
   </li>
 
@@ -12,7 +11,70 @@
     <%= @user.email %>
   </li>
 
+  <li>
+    <strong>Id:</strong>
+    <%= @user.id %> - used for assigning tasks
+  </li>
+
+  <li>
+    <strong>Manager:</strong>
+    <% manager_name = @user.manager %>
+    <%= if manager_name == nil, do: "No manager", else: manager_name.name %>
+    <%= if manager_name == nil do %>
+    <%= link("Change Manager", to: Routes.user_path(@conn, :edit, @current_user)) %>
+    <% end %>
+  </li>
+
+  <% underlings = TaskTracker.Users.get_underlings_of(@user.id) %>
+  <%= if length(underlings) != 0 do %>
+  <li>
+    <strong>Underlings:</strong>
+    <table class="table table-striped table-hover">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Id (for assigning tasks)</th>
+    <%# underlings = TaskTracker.Users.get_underlings_of(@user.id) %>
+    <%= for underling <- underlings do %>
+      <tr>
+        <td><%= underling.name %></td>
+        <td><%= underling.email %></td>
+        <td><%= underling.id %></td>
+      </tr>
+    <% end %>
+    </table>
+  </li>
+
+  <li>
+    <strong>Underling Task list:</strong>
+    <table class="table table-striped table-hover">
+    <th>Task</th>
+    <th>Description</th>
+    <th>Assignee</th>
+    <th>Time taken</th>
+    <%= for task <- @underling_tasks do %>
+      <% user_num = if task.user_id == nil, do: 0, else: task.user_id %>
+      <% user_name = TaskTracker.Users.get_user(user_num) %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <%= if (user_name == nil) do %>
+          <% user_name = %{name: "Not assigned"} %>
+          <td><%= user_name.name %></td>
+        <% else %>
+          <td> <%= user_name.name %></td>
+        <% end %>
+
+        <td><%= task.time %></td>
+          <%= if task.completion do %>
+          <td>&#10004;</td>
+        <% else %>
+          <td>&#10006;</td>
+        <% end %>
+      <tr>
+    <% end %>
+    <table>
+  </li>
+  <% end %>
 </ul>
 
-<span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.page_path(@conn, :index) %></span>

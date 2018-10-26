@@ -3,14 +3,15 @@ defmodule TaskTracker.Repo.Migrations.CreateTasks do
 
   def change do
     create table(:tasks) do
-      add :title, :string
       add :description, :text
-      add :userID, :integer
       add :time, :integer
+      add :title, :string
+      add :userID, :integer
       add :completion, :boolean, default: false, null: false
 
       timestamps()
     end
 
+    create index(:tasks, [:userID])
   end
 end

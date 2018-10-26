@@ -3,9 +3,9 @@ defmodule TaskTrackerWeb.UserControllerTest do
 
   alias TaskTracker.Users
 
-  @create_attrs %{email: "some email", name: "some name"}
-  @update_attrs %{email: "some updated email", name: "some updated name"}
-  @invalid_attrs %{email: nil, name: nil}
+  @create_attrs %{email: "some email", is_manager: true, name: "some name"}
+  @update_attrs %{email: "some updated email", is_manager: false, name: "some updated name"}
+  @invalid_attrs %{email: nil, is_manager: nil, name: nil}
 
   def fixture(:user) do
     {:ok, user} = Users.create_user(@create_attrs)
@@ -13,9 +13,9 @@ defmodule TaskTrackerWeb.UserControllerTest do
   end
 
   describe "index" do
-    test "lists all users", %{conn: conn} do
+    test "lists all user", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Users"
+      assert html_response(conn, 200) =~ "Listing User"
     end
   end
 

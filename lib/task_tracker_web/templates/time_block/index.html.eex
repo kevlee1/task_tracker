@@ -1,0 +1,28 @@
+<h1>Listing Time block</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Endtime</th>
+      <th>Starttime</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for time_block <- @time_block do %>
+    <tr>
+      <td><%= time_block.endTime %></td>
+      <td><%= time_block.startTime %></td>
+
+      <td>
+        <%= link "Show", to: Routes.time_block_path(@conn, :show, time_block) %>
+        <%= link "Edit", to: Routes.time_block_path(@conn, :edit, time_block) %>
+        <%= link "Delete", to: Routes.time_block_path(@conn, :delete, time_block), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Time block", to: Routes.time_block_path(@conn, :new) %></span>

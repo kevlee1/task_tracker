@@ -29,7 +29,9 @@ defmodule TaskTrackerWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
-    render(conn, "show.html", user: user)
+    IO.inspect(Users.get_underlings_of(id))
+    underling_tasks = List.foldl(Users.get_underlings_of(id), [], fn u, acc -> u.task ++ acc end)
+    render(conn, "show.html", user: user, underling_tasks: underling_tasks)
   end
 
   def edit(conn, %{"id" => id}) do

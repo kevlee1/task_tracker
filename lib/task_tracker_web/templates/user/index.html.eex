@@ -1,19 +1,21 @@
-<h1>Listing Users</h1>
+<h1>Listing User</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
       <th>Email</th>
+      <th>Name</th>
+      <th>Is manager</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for user <- @users do %>
+<%= for user <- @user do %>
     <tr>
-      <td><%= user.name %></td>
       <td><%= user.email %></td>
+      <td><%= user.name %></td>
+      <td><%= user.is_manager %></td>
 
       <td>
         <%= link "Show", to: Routes.user_path(@conn, :show, user) %>
