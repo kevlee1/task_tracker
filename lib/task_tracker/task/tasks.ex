@@ -8,7 +8,7 @@ defmodule TaskTracker.Task.Tasks do
     field :description, :string, default: ""
     field :time, :integer, default: 0
     field :title, :string
-    field :userID, :integer
+    field :userID, :integer, default: 0
 
     timestamps()
   end

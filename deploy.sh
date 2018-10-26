@@ -12,8 +12,6 @@ mix deps.get # get the out of date dependencies
 mix compile # compile source
 (cd assets && npm install)
 (cd assets && webpack --mode production)
-mix ecto.create
-mix ecto.migrate
 mix phx.digest # compress static files
 mix compile
 echo "Generating release..."
