@@ -21,6 +21,16 @@ use Mix.Releases.Config,
 # an environment's settings will override those of a release
 # when building in that environment, this combination of release
 # and environment configuration is called a profile
+get_secret = fn name ->
+  base = Path.expand("~/.config/taskmaster")
+  File.mkdir_p!(base)
+  path = Path.join(base, name)
+  unless File.exists?(path) do
+    secret = Base.encode16(:crypto.strong_rand_bytes(32))
+    File.write!(path, secret)
+  end
+  String.trim(File.read!(path))
+end
 
 environment :dev do
   # If you are running Phoenix, you should make sure that
@@ -37,7 +47,7 @@ end
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"d1b4`/KWJz&>mhLR*vHR3ixOq7!u?`fjN@MP%JG]HWpTP7}M:{*R}`/zE/p=wOvm"
+  set cookie: String.to_atom(get_secret.("prod_cookie"))
 end
 
 # You may define one or more releases in this file.
